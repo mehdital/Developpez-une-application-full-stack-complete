@@ -1,0 +1,56 @@
+<main class="page">
+  <div class="container">
+    <a class="back-link" routerLink="/articles">←</a>
+
+    <p class="form-error" *ngIf="error">{{ error }}</p>
+
+    <article class="card mt-2" *ngIf="post && !loading">
+      <h1 class="page__title">{{ post.title }}</h1>
+
+      <div class="meta">
+        <span><strong>{{ post.createdAt | date: 'dd/MM/yyyy' }}</strong></span>
+        <span><strong>{{ post.authorUsername }}</strong></span>
+        <span><strong>{{ post.topic.title }}</strong></span>
+      </div>
+
+      <p class="article-content">{{ post.content }}</p>
+
+      <hr class="hr" />
+
+      <h2 class="mt-0">Commentaires</h2>
+
+      <section class="comments" aria-label="Liste des commentaires">
+        <div class="comment" *ngFor="let comment of post.comments">
+          <div class="badge" aria-hidden="true">{{ badge(comment.authorUsername) }}</div>
+          <div class="comment__body">
+            <p class="comment__user">{{ comment.authorUsername }}</p>
+            <p class="comment__text">{{ comment.content }}</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="comment-form mt-2">
+        <label for="comment" class="field" style="display: block; margin-bottom: 0.35rem; color: var(--muted)">Ajouter un commentaire</label>
+        <textarea
+          id="comment"
+          class="textarea"
+          placeholder="Écrivez ici votre commentaire"
+          [formControl]="commentForm.controls.content"
+        ></textarea>
+
+        <button class="send-btn" type="button" aria-label="Envoyer" [disabled]="sending" (click)="sendComment()">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M3 11.5l18-8-6.5 18-3.5-7-8-3z"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linejoin="round"
+            />
+            <path d="M11 14.5l10-11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+    </article>
+  </div>
+</main>
+

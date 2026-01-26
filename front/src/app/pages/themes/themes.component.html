@@ -1,0 +1,25 @@
+<main class="page">
+  <div class="container">
+    <p class="form-error" *ngIf="error">{{ error }}</p>
+
+    <div class="grid-2" *ngIf="!loading">
+      <article class="card" *ngFor="let topic of topics">
+        <h2 class="card__title">{{ topic.title }}</h2>
+        <p class="card__desc">{{ topic.description }}</p>
+        <div class="card__actions">
+          <button
+            class="btn"
+            [class.btn--primary]="!topic.subscribed"
+            [class.btn--disabled]="topic.subscribed"
+            type="button"
+            [disabled]="topic.subscribed || subscribingIds.has(topic.id)"
+            (click)="subscribe(topic)"
+          >
+            {{ topic.subscribed ? 'Déjà abonné' : 'S’abonner' }}
+          </button>
+        </div>
+      </article>
+    </div>
+  </div>
+</main>
+

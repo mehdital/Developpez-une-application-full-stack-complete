@@ -1,25 +1,37 @@
-# P6-Full-Stack-reseau-dev
+# MDD (Monde de Dév) — MVP
 
-## Front
+Mono-repo Full-Stack (Front Angular + Back Spring Boot + MySQL) avec authentification JWT, abonnements, articles et commentaires.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+## Le plus simple (1 commande, via Docker)
+Depuis la racine du repo :
 
-Don't forget to install your node_modules before starting (`npm install`).
+`docker compose up --build`
 
-### Development server
+Puis ouvre :
+- Front : `http://localhost:4200`
+- API (direct) : `http://localhost:8080`
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Arrêter :
+- `Ctrl+C` puis `docker compose down`
+- supprimer les données MySQL : `docker compose down -v`
 
-### Build
+## Dev sans Docker (optionnel)
+### 1) Démarrer MySQL
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+`docker compose up -d db`
 
-### Where to start
+### 2) Back
+`$env:DB_USERNAME='root'; $env:DB_PASSWORD='TON_MDP'`
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
+`cd back; mvn spring-boot:run`
 
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
 
-Note: I recommend to use material however it's not mandatory, if you prefer you can get rid of it.
 
-Good luck!
+### 3) Front
+`cd front`
+
+`npm install`
+
+`npm start`
+
+Front : `http://localhost:4200`

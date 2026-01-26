@@ -1,0 +1,29 @@
+<main class="page">
+  <div class="container">
+    <div class="toolbar">
+      <a class="btn btn--primary" routerLink="/articles/new">Créer un article</a>
+
+      <div style="display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end">
+        <span style="color: var(--muted); font-weight: 700">Trier par :</span>
+        <select class="select" aria-label="Trier par" [value]="sort" (change)="onSortChange($any($event.target).value)">
+          <option value="desc">Plus récents</option>
+          <option value="asc">Plus anciens</option>
+        </select>
+      </div>
+    </div>
+
+    <p class="form-error" *ngIf="error">{{ error }}</p>
+
+    <section class="grid-2" aria-label="Liste des articles" *ngIf="!loading">
+      <a class="card card--link" *ngFor="let post of posts" [routerLink]="['/articles', post.id]">
+        <h2 class="card__title">{{ post.title }}</h2>
+        <div class="meta">
+          <span>{{ post.createdAt | date: 'dd/MM/yyyy' }}</span
+          ><span>{{ post.authorUsername }}</span>
+        </div>
+        <p class="card__desc">{{ excerpt(post.content) }}</p>
+      </a>
+    </section>
+  </div>
+</main>
+
