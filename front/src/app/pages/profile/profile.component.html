@@ -1,0 +1,51 @@
+<main class="page">
+  <div class="container">
+    <section class="card profile-top">
+      <h1 class="page__title center">Profil utilisateur</h1>
+
+      <p class="form-error" *ngIf="error">{{ error }}</p>
+
+      <form class="form" [formGroup]="form" (ngSubmit)="save()">
+        <div class="field">
+          <label for="p-username">Username</label>
+          <input class="input" id="p-username" formControlName="username" type="text" autocomplete="username" />
+          <p class="field-error" *ngIf="form.controls.username.touched && form.controls.username.hasError('required')">Champ requis</p>
+        </div>
+
+        <div class="field">
+          <label for="p-email">Adresse e-mail</label>
+          <input class="input" id="p-email" formControlName="email" type="email" autocomplete="email" />
+          <p class="field-error" *ngIf="form.controls.email.touched && form.controls.email.hasError('required')">Champ requis</p>
+          <p class="field-error" *ngIf="form.controls.email.touched && form.controls.email.hasError('email')">E-mail invalide</p>
+        </div>
+
+        <div class="field">
+          <label for="p-password">Mot de passe</label>
+          <input class="input" id="p-password" formControlName="password" type="password" autocomplete="new-password" />
+          <p class="field-error" *ngIf="form.controls.password.touched && form.controls.password.hasError('pattern')">
+            8+ caractères, 1 minuscule, 1 majuscule, 1 chiffre, 1 spécial
+          </p>
+        </div>
+
+        <button class="btn btn--primary" type="submit" style="justify-self: center" [disabled]="saving || form.invalid">Sauvegarder</button>
+      </form>
+
+      <hr class="hr" />
+
+      <h2 class="subs-title">Abonnements</h2>
+
+      <div class="subs-grid" *ngIf="user">
+        <article class="card card--flat" *ngFor="let topic of user.subscriptions">
+          <h3 class="card__title">{{ topic.title }}</h3>
+          <p class="card__desc">{{ topic.description }}</p>
+          <div class="card__actions">
+            <button class="btn btn--primary" type="button" [disabled]="unsubscribingIds.has(topic.id)" (click)="unsubscribe(topic)">
+              Se désabonner
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+</main>
+

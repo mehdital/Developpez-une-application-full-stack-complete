@@ -1,0 +1,39 @@
+<div class="auth">
+  <header class="auth-top">
+    <div class="container auth-top__bar">
+      <a class="back-link" routerLink="/" aria-label="Retour">←</a>
+      <div class="brand brand__mini">
+        <img class="brand__svg" src="assets/logo_p6.png" alt="MDD" />
+      </div>
+      <span aria-hidden="true"></span>
+    </div>
+  </header>
+
+  <main class="auth-main">
+    <section class="card auth-card">
+      <h1 class="page__title center">Se connecter</h1>
+
+      <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+        <div class="field">
+          <label for="li-identity">E-mail ou nom d’utilisateur</label>
+          <input class="input" id="li-identity" formControlName="identifier" type="text" autocomplete="username" />
+          <p class="field-error" *ngIf="form.controls.identifier.touched && form.controls.identifier.hasError('required')">
+            Champ requis
+          </p>
+          <p class="field-error" *ngIf="fieldErrors['identifier']">{{ fieldErrors['identifier'] }}</p>
+        </div>
+
+        <div class="field">
+          <label for="li-password">Mot de passe</label>
+          <input class="input" id="li-password" formControlName="password" type="password" autocomplete="current-password" />
+          <p class="field-error" *ngIf="form.controls.password.touched && form.controls.password.hasError('required')">Champ requis</p>
+          <p class="field-error" *ngIf="fieldErrors['password']">{{ fieldErrors['password'] }}</p>
+        </div>
+
+        <p class="form-error" *ngIf="formError">{{ formError }}</p>
+
+        <button class="btn btn--primary" type="submit" [disabled]="loading || form.invalid">Se connecter</button>
+      </form>
+    </section>
+  </main>
+</div>

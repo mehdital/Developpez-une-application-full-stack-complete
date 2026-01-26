@@ -1,5 +1,12 @@
-<div class="center">
-  <img src="/assets/logo_p6.png" alt="logo" />
-  <h1>Welcome to MDD</h1>
-  <button mat-raised-button color="primary" (click)="start()">Commencer</button>
-</div>
+<main class="landing">
+  <section class="landing__box">
+    <div class="brand">
+      <img class="brand__svg" src="assets/logo_p6.png" alt="MDD" />
+    </div>
+
+    <div class="landing__actions">
+      <a class="btn btn--ghost" routerLink="/login">Se connecter</a>
+      <a class="btn btn--ghost" routerLink="/register">S’inscrire</a>
+    </div>
+  </section>
+</main>

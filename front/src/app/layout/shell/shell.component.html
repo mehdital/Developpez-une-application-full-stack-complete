@@ -1,0 +1,38 @@
+<!-- Drawer (mobile) -->
+<input type="checkbox" id="nav-toggle" #navToggle />
+<label class="drawer-overlay" for="nav-toggle" aria-hidden="true"></label>
+<aside class="drawer" aria-label="Menu mobile">
+  <div class="drawer__title">
+    <strong>Menu</strong>
+    <label class="btn btn--ghost" for="nav-toggle" style="padding: 0.4rem 0.6rem">Fermer</label>
+  </div>
+  <nav class="drawer__links">
+    <a routerLink="/articles" (click)="closeDrawer(navToggle)">Articles</a>
+    <a routerLink="/themes" (click)="closeDrawer(navToggle)">Thèmes</a>
+    <a routerLink="/profile" (click)="closeDrawer(navToggle)">Profil</a>
+    <button class="btn btn--danger" type="button" (click)="closeDrawer(navToggle); auth.logout()">Se déconnecter</button>
+  </nav>
+</aside>
+
+<header class="app-header">
+  <div class="container app-header__bar">
+    <div class="brand brand__mini">
+      <img class="brand__svg" src="assets/logo_p6.png" alt="MDD" />
+    </div>
+
+    <nav class="nav" aria-label="Navigation">
+      <button class="btn btn--danger" type="button" (click)="auth.logout()">Se déconnecter</button>
+      <a routerLink="/articles" routerLinkActive="is-active">Articles</a>
+      <a routerLink="/themes" routerLinkActive="is-active">Thèmes</a>
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 0.5rem">
+      <a class="avatar" routerLink="/profile" aria-label="Profil">{{ initials((auth.user$ | async)?.username) }}</a>
+      <label class="hamburger" for="nav-toggle" aria-label="Ouvrir le menu">
+        <span></span>
+      </label>
+    </div>
+  </div>
+</header>
+
+<router-outlet></router-outlet>
