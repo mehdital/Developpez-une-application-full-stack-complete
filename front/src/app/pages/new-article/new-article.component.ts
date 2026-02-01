@@ -10,7 +10,6 @@ import { TopicService } from 'src/app/core/services/topic.service';
 @Component({
   selector: 'app-new-article',
   templateUrl: './new-article.component.html',
-  styleUrls: ['./new-article.component.scss'],
 })
 export class NewArticleComponent implements OnInit {
   loading = false;
@@ -19,8 +18,8 @@ export class NewArticleComponent implements OnInit {
 
   readonly form = this.fb.group({
     topicId: [null as number | null, [Validators.required]],
-    title: ['', [Validators.required]],
-    content: ['', [Validators.required]],
+    title: this.fb.nonNullable.control('', [Validators.required]),
+    content: this.fb.nonNullable.control('', [Validators.required]),
   });
 
   constructor(
@@ -45,9 +44,12 @@ export class NewArticleComponent implements OnInit {
     }
 
     const { topicId, title, content } = this.form.getRawValue();
+    if (topicId == null) {
+      return;
+    }
     this.loading = true;
     this.postService
-      .createPost(topicId as number, title ?? '', content ?? '')
+      .createPost(topicId, title, content)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: (created) => this.router.navigate(['/articles', created.id]),

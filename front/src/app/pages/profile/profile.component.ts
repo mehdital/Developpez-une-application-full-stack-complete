@@ -13,7 +13,6 @@ const OPTIONAL_PASSWORD_REGEX = /^(?:$|(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
   loading = false;
@@ -22,7 +21,7 @@ export class ProfileComponent implements OnInit {
   user: User | null = null;
   unsubscribingIds = new Set<number>();
 
-  readonly form = this.fb.group({
+  readonly form = this.fb.nonNullable.group({
     username: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.pattern(OPTIONAL_PASSWORD_REGEX)]],
@@ -65,7 +64,7 @@ export class ProfileComponent implements OnInit {
     this.error = '';
 
     this.userService
-      .updateMe(username ?? '', email ?? '', password ?? '')
+      .updateMe(username, email, password)
       .pipe(finalize(() => (this.saving = false)))
       .subscribe({
         next: (user) => {

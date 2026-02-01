@@ -8,14 +8,13 @@ import { ApiError } from 'src/app/core/models/api-error.model';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   loading = false;
   formError = '';
   fieldErrors: Record<string, string> = {};
 
-  readonly form = this.fb.group({
+  readonly form = this.fb.nonNullable.group({
     identifier: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
@@ -35,7 +34,7 @@ export class LoginComponent {
     this.loading = true;
 
     this.auth
-      .login(identifier ?? '', password ?? '')
+      .login(identifier, password)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: () => this.router.navigateByUrl('/articles'),

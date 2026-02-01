@@ -7,7 +7,6 @@ import { PostService } from 'src/app/core/services/post.service';
 @Component({
   selector: 'app-articles',
   templateUrl: './articles.component.html',
-  styleUrls: ['./articles.component.scss'],
 })
 export class ArticlesComponent implements OnInit {
   loading = false;

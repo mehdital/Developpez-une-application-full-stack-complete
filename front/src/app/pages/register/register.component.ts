@@ -10,14 +10,13 @@ const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
   loading = false;
   formError = '';
   fieldErrors: Record<string, string> = {};
 
-  readonly form = this.fb.group({
+  readonly form = this.fb.nonNullable.group({
     username: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.pattern(PASSWORD_REGEX)]],
@@ -38,7 +37,7 @@ export class RegisterComponent {
     this.loading = true;
 
     this.auth
-      .register(username ?? '', email ?? '', password ?? '')
+      .register(username, email, password)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: () => this.router.navigateByUrl('/login'),

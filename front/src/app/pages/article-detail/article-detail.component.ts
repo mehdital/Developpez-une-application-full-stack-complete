@@ -9,7 +9,6 @@ import { PostService } from 'src/app/core/services/post.service';
 @Component({
   selector: 'app-article-detail',
   templateUrl: './article-detail.component.html',
-  styleUrls: ['./article-detail.component.scss'],
 })
 export class ArticleDetailComponent implements OnInit {
   loading = false;
@@ -17,7 +16,7 @@ export class ArticleDetailComponent implements OnInit {
   error = '';
   post: PostDetail | null = null;
 
-  readonly commentForm = this.fb.group({
+  readonly commentForm = this.fb.nonNullable.group({
     content: ['', [Validators.required]],
   });
 
@@ -56,7 +55,7 @@ export class ArticleDetailComponent implements OnInit {
       return;
     }
 
-    const content = (this.commentForm.getRawValue().content || '').trim();
+    const content = this.commentForm.getRawValue().content.trim();
     if (!content) {
       return;
     }
